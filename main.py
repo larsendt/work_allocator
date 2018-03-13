@@ -10,23 +10,22 @@ GIVE_WORK = "give_work"
 DISCONNECT = "disconnect"
 WORK = "blah"
 
-class Work(object):
-    pass
-
-
 class Client(object):
     def __init__(self, _id):
         self._id = _id
         self._work_given = 0
         self.connected = False
 
-    def give_work(self, work):
+    def send(self, work):
+        if work != WORK:
+            raise Exception("Client %d was given something that wasn't work" % self._id)
         if self.connected:
             self._work_given += 1
         else:
             raise Exception("Work given to disconnected client %d" % self._id)
 
 
+# TODO: implement me!
 class WorkAllocator(object):
     def __init__(self):
         # TODO: add data structures and initialize here
@@ -43,6 +42,7 @@ class WorkAllocator(object):
     def disconnect(self, client):
         # TODO: handle this ^ client wanting to disconnect
         pass
+
 
 class Simulator(object):
     def __init__(self):
