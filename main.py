@@ -3,27 +3,16 @@ import random
 import sys
 import time
 
-MAX_CLIENTS = int(1e3)
-STEPS_TO_RUN = int(5e5)
-CONNECT = "connect"
-GIVE_WORK = "give_work"
-DISCONNECT = "disconnect"
-WORK = "blah"
+###############################################################################
+# If it runs too slowly, turn these numbers down
+###############################################################################
 
-class Client(object):
-    def __init__(self, _id):
-        self._id = _id
-        self._work_given = 0
-        self.connected = False
+MAX_CLIENTS = 1000
+STEPS_TO_RUN = 500000
 
-    def send(self, work):
-        if work != WORK:
-            raise Exception("Client %d was given something that wasn't work" % self._id)
-        if self.connected:
-            self._work_given += 1
-        else:
-            raise Exception("Work given to disconnected client %d" % self._id)
-
+###############################################################################
+# Implement all of this
+###############################################################################
 
 # TODO: implement me!
 class WorkAllocator(object):
@@ -42,6 +31,30 @@ class WorkAllocator(object):
     def disconnect(self, client):
         # TODO: handle this ^ client wanting to disconnect
         pass
+
+
+###############################################################################
+# Don't worry about stuff below here
+###############################################################################
+
+CONNECT = "connect"
+GIVE_WORK = "give_work"
+DISCONNECT = "disconnect"
+WORK = "blah"
+
+class Client(object):
+    def __init__(self, _id):
+        self._id = _id
+        self._work_given = 0
+        self.connected = False
+
+    def send(self, work):
+        if work != WORK:
+            raise Exception("Client %d was given something that wasn't work" % self._id)
+        if self.connected:
+            self._work_given += 1
+        else:
+            raise Exception("Work given to disconnected client %d" % self._id)
 
 
 class Simulator(object):
