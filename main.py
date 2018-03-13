@@ -4,14 +4,15 @@ import sys
 import time
 
 ###############################################################################
-# If it runs too slowly, turn these numbers down
+# If it runs too slowly, turn these numbers down.
 ###############################################################################
 
 MAX_CLIENTS = 1000
-STEPS_TO_RUN = 500000
+WORK_TO_ALLOCATE = 500000
+
 
 ###############################################################################
-# Implement all of this
+# Implement all of this.
 ###############################################################################
 
 # TODO: implement me!
@@ -34,12 +35,10 @@ class WorkAllocator(object):
 
 
 ###############################################################################
-# Don't worry about stuff below here
+# This is the client definition. If you'd like to add anything to it, check
+# with me.
 ###############################################################################
 
-CONNECT = "connect"
-GIVE_WORK = "give_work"
-DISCONNECT = "disconnect"
 WORK = "blah"
 
 class Client(object):
@@ -50,12 +49,21 @@ class Client(object):
 
     def send(self, work):
         if work != WORK:
-            raise Exception("Client %d was given something that wasn't work" % self._id)
+            raise Exception(
+                "Client %d was given something that wasn't work" % self._id)
         if self.connected:
             self._work_given += 1
         else:
             raise Exception("Work given to disconnected client %d" % self._id)
 
+
+###############################################################################
+# Don't worry about stuff below here.
+###############################################################################
+
+CONNECT = "connect"
+GIVE_WORK = "give_work"
+DISCONNECT = "disconnect"
 
 class Simulator(object):
     def __init__(self):
@@ -65,9 +73,10 @@ class Simulator(object):
 
     def run(self, allocator):
         start = time.time()
-        for i in xrange(STEPS_TO_RUN):
+        for i in xrange(WORK_TO_ALLOCATE):
             if time.time() - start >= 1:
-                print("%.2f%% (%d/%d) done" % (100*float(i+1)/STEPS_TO_RUN, i, STEPS_TO_RUN))
+                print("%.2f%% (%d/%d) done" % (
+                    100*float(i+1)/WORK_TO_ALLOCATE, i, WORK_TO_ALLOCATE))
                 start = time.time()
             self.step(allocator)
 
